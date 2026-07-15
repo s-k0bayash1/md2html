@@ -1,4 +1,4 @@
-module github.com/s-k0bayash1/markdown-to-html
+module github.com/s-k0bayash1/md2html
 
 go 1.25.5
 
