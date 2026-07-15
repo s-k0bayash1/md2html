@@ -1,6 +1,6 @@
 module github.com/s-k0bayash1/md2html
 
-go 1.25.5
+go 1.26.5
 
 require (
 	github.com/alecthomas/chroma/v2 v2.27.0
