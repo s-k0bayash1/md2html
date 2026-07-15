@@ -20,7 +20,7 @@ MarkdownをシングルバイナリでHTMLに変換するCLI。出力されるHT
 ## インストール
 
 ```sh
-go install github.com/s-k0bayash1/markdown-to-html/cmd/md2html@latest
+go install github.com/s-k0bayash1/md2html/cmd/md2html@latest
 ```
 
 またはGitHub Releasesからバイナリをダウンロード(macOS / Linux / Windows)。
