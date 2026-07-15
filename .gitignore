@@ -3,8 +3,9 @@
 /md2html.exe
 /dist/
 
-# 変換結果のHTML
+# 変換結果のHTML (テストのgoldenファイルは除く)
 *.html
+!**/testdata/*.html
 
 # テスト・カバレッジ
 *.test
