@@ -9,7 +9,7 @@
 <body>
 <main class="markdown-body">
 {{.Body}}</main>
-{{if .Mermaid}}<script>{{.MermaidJS}}</script>
+{{if .MermaidJS}}<script>{{.MermaidJS}}</script>
 <script>mermaid.initialize({startOnLoad:true,theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"default"});</script>
 {{end}}</body>
 </html>

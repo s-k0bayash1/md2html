@@ -31,19 +31,28 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if err := fs.Parse(args); err != nil {
 		return 2
 	}
+	// flag stops at the first positional argument; keep parsing so
+	// "md2html file.md -o out.html" works as documented.
+	var positional []string
+	for rest := fs.Args(); len(rest) > 0; rest = fs.Args() {
+		positional = append(positional, rest[0])
+		if err := fs.Parse(rest[1:]); err != nil {
+			return 2
+		}
+	}
 	if *showVersion {
 		fmt.Fprintln(stdout, "md2html "+version)
 		return 0
 	}
-	if fs.NArg() > 1 {
+	if len(positional) > 1 {
 		fmt.Fprintln(stderr, "md2html: too many arguments")
 		fs.Usage()
 		return 2
 	}
 
 	input := "-"
-	if fs.NArg() == 1 {
-		input = fs.Arg(0)
+	if len(positional) == 1 {
+		input = positional[0]
 	}
 	fromStdin := input == "-"
 
@@ -93,11 +102,9 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 		return 0
 	}
-	if !fromStdin {
-		if same, _ := sameFile(input, outPath); same {
-			fmt.Fprintf(stderr, "md2html: output %q would overwrite the input file\n", outPath)
-			return 1
-		}
+	if !fromStdin && samePath(input, outPath) {
+		fmt.Fprintf(stderr, "md2html: output %q would overwrite the input file\n", outPath)
+		return 1
 	}
 	if err := os.WriteFile(outPath, res.HTML, 0o644); err != nil {
 		fmt.Fprintf(stderr, "md2html: %v\n", err)
@@ -106,14 +113,8 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	return 0
 }
 
-func sameFile(a, b string) (bool, error) {
-	aa, err := filepath.Abs(a)
-	if err != nil {
-		return false, err
-	}
-	bb, err := filepath.Abs(b)
-	if err != nil {
-		return false, err
-	}
-	return aa == bb, nil
+func samePath(a, b string) bool {
+	aa, errA := filepath.Abs(a)
+	bb, errB := filepath.Abs(b)
+	return errA == nil && errB == nil && aa == bb
 }
