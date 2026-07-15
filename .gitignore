@@ -1,3 +1,16 @@
+# ビルド成果物
 /md2html
+/md2html.exe
 /dist/
+
+# 変換結果のHTML
 *.html
+
+# テスト・カバレッジ
+*.test
+coverage.out
+
+# OS・エディタ
+.DS_Store
+.idea/
+.vscode/
