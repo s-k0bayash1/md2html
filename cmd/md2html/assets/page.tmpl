@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}}</title>
+<style>{{.CSS}}</style>
+</head>
+<body>
+<main class="markdown-body">
+{{.Body}}</main>
+{{if .Mermaid}}<script>{{.MermaidJS}}</script>
+<script>mermaid.initialize({startOnLoad:true,theme:window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"default"});</script>
+{{end}}</body>
+</html>
